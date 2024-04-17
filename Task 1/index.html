@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        .heading{
+            border: 1px solid black;
+            padding: 14px;
+         
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mainHeading{
+            font-size: large;
+            display: flex;
+            flex-direction: column;
+        }
+        .buttonSection{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        p{
+            padding: 0;
+            margin: 0;
+            
+        }
+        .button{
+            padding:  10px 20px;
+            margin: 0 5px;
+            background-color: #dddddd;
+            border-radius: 5px;
+            border: 0.5px solid gray;
+        }
+        td, th {
+          border: 1px solid black;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+    <title>IWCN - Assessment 1</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Include React scripts -->
+    <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.production.min.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      // Destructure useState and useEffect from React
+      const { useState, useEffect } = React;
+
+      // Your functional component
+      function Counter() {
+        let obj={
+            "Onboarding Call":"",
+            "Google Search Console Access":"",
+            "Google Analytics Access":"",
+            "Website Access":"",
+            "Technical Audit":"",
+            "Anchor Text and Semantics Analysis":"",
+            "Competitor Analysis":"",
+            "Anchor Text/URL Mapping":"",
+            "Google Data Studio Report + Local Reporting Suite":"",
+            "Site Level Optimization":"",
+            "On page Optimization":"",
+            "Content Creation":"",
+            "Content Publishing":"",
+            "Premium Press Analysis":"",
+            "Authority Niche Placements":"",
+            "Review Management":"",
+            "Index Links":"",
+            "Video Recap":""
+        }
+        const[order, setOrder]=useState(["Onboarding Call", "Google Search Console Access", "Google Analytics Access","Website Access","Technical Audit","Anchor Text and Semantics Analysis","Competitor Analysis","Anchor Text/URL Mapping","Google Data Studio Report + Local Reporting Suite","Site Level Optimization","On page Optimization","Content Creation","Content Publishing","Premium Press Analysis","Authority Niche Placements","Review Management","Index Links","Video Recap"]);
+        // const[arr, setArr]=useState([obj]);
+        const [arr, setArr] = useState(Array.from({ length: 1 }, () => ({...obj})));
+        useEffect(()=>{
+console.log("setted arr", arr)
+  },[arr])
+const addColumn=()=>{
+    setArr([...arr,obj])
+
+}
+
+const handleChange = (newValue, colIndex, key) => {
+    
+    setArr((prevArr) => {
+       
+      const newArr = [...prevArr];
+      newArr[colIndex][key] = newValue;
+      return newArr;
+    });
+  };
+
+  const addRow=()=>{
+
+    let heading= prompt("Enter new Heading")
+    if(heading){
+    setOrder([...order, heading]);
+    obj.heading='';}
+  }
+        return (
+            <div >
+                {" "}
+                <div className='heading'>
+                    
+                    <div className="mainHeading"><p>Task -1</p><p>By Naman Arora</p></div>
+                    <div className='buttonSection'>
+
+                              <button onClick={addRow} className='button'>Add Row</button>
+                              <button onClick={addColumn} className='button'>Add Column</button>
+                  </div>
+                  </div>
+                <table >
+       
+      
+
+        <tbody>
+          {order.map((key, rowIndex) => {
+            return <tr >
+                <td  style={{width:'10vw'}}>{key}</td>
+              {arr.map((item, colIndex) => {
+                return   <td key={colIndex} style={{border: '1px solid black', padding: 0, margin: 0, position:'relative'}} className="border">
+                <div
+                  contentEditable
+                  suppressContentEditableWarning
+                  style={{
+            display: 'block', // Makes div a block element to fill td
+            width: '100%',   // Full width of the td
+            height: '100%',  // Full height of the td
+            top:0,
+         
+            position:'absolute' 
+        }}
+                  onBlur={(e) =>
+                    handleChange(
+                      e.target.innerText,
+                      colIndex,
+                      order[rowIndex]
+                    )
+                  }
+                >
+                  {String(item[key])}
+                </div>
+              </td>
+           
+              })}
+            </tr>;
+          })}
+        </tbody>
+      </table>
+    </div>
+        );
+      }
+
+      // Render your component
+      ReactDOM.render(<Counter />, document.getElementById("root"));
+    </script>
+  </body>
+  
+</html>
